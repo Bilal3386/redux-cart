@@ -5,14 +5,12 @@ const DUMMY_DATA = [
     id: "p1",
     price: 10,
     title: "My First Book",
-    quantity: 1,
     description: "The First book i ever wrote",
   },
   {
     id: "p2",
     price: 5,
     title: "My Second Book",
-    quantity: 1,
     description: "The second book i ever wrote",
   },
 ];
@@ -28,7 +26,6 @@ const Products = (props) => {
           title={item.title}
           price={item.price}
           description={item.description}
-          quantity= {item.quantity}
         />
         ))}
       </ul>
