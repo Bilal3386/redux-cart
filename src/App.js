@@ -3,9 +3,8 @@ import { useSelector, useDispatch } from "react-redux";
 import Cart from "./components/Cart/Cart";
 import Layout from "./components/Layout/Layout";
 import Products from "./components/Shop/Products";
-import { uiAction } from "./store/ui-slice";
 import Notification from "./components/UI/Notification";
-
+import {addItem} from './store/cart-slice'
 let initial = true;
 function App() {
   const cartShow = useSelector((state) => state.ui.isShown);
@@ -14,46 +13,12 @@ function App() {
   const cart = useSelector((state) => state.cart);
 
   useEffect(() => {
-    const sendData = async () => {
-      dispatch(
-        uiAction.setNotification({
-          status: "pending",
-          title: "Sending...",
-          message: "sending cart data!",
-        })
-      );
-      const response = await fetch(
-        "https://redux-cart-7f464-default-rtdb.firebaseio.com/cart.json",
-        {
-          method: "PUT",
-          body: JSON.stringify(cart),
-        }
-      );
-      if (!response.ok) {
-        throw new Error("Something went wrong...");
-      }
-
-      dispatch(
-        uiAction.setNotification({
-          status: "success",
-          title: "Success...",
-          message: "sending cart data successfully!",
-        })
-      );
-    };
-    if (initial) {
-      initial = false;
-      return;
-    }
-    sendData().catch((error) =>
-      dispatch(
-        uiAction.setNotification({
-          status: "error",
-          title: "Error...",
-          message: "sending cart data failed!",
-        })
-      )
-    );
+   if(initial)
+   {
+    initial = false
+    return
+   }
+   dispatch(addItem(cart))
   }, [cart, dispatch]);
 
   return (
